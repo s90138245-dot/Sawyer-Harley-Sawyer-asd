@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آرشیو دکتر هارلی</title>
+<style>
+:root{--bg:#0a0a0a;--card:#161616;--accent:#e10600;--txt:#e8e8e8}
+body[data-theme="blue"]{--bg:#04121f;--card:#0a2438;--accent:#00aaff;--txt:#dff3ff}
+body[data-theme="green"]{--bg:#04120a;--card:#0a2a16;--accent:#00ff88;--txt:#dfffe9}
+body[data-theme="amber"]{--bg:#1a1200;--card:#2e2000;--accent:#ffb300;--txt:#fff3d6}
+body[data-theme="matrix"]{--bg:#000;--card:#001100;--accent:#00ff00;--txt:#00ff00}
+body[data-theme="purple"]{--bg:#12041f;--card:#220a38;--accent:#b400ff;--txt:#f2dffb}
+body{background:var(--bg);color:var(--txt);font-family:Tahoma,sans-serif;margin:0;line-height:2}
+#splash{position:fixed;inset:0;background:#000;color:#fff;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;overflow-y:auto}
+.box{background:#161616;border:1px solid #e10600;border-radius:16px;padding:22px;max-width:360px;width:100%}
+.box input{background:#000;color:#fff;border:1px solid #555;padding:12px;border-radius:8px;width:90%;text-align:center;margin:8px 0;direction:ltr;font-family:inherit}
+.btn{padding:12px 28px;background:#e10600;color:#fff;border:none;border-radius:50px;cursor:pointer;font-weight:bold;font-family:inherit;font-size:1rem}
+.container{max-width:1100px;margin:auto;padding:20px}
+.sec{font-size:1.6rem;text-align:center;color:var(--accent);margin:45px 0 18px;border-bottom:2px solid var(--accent);padding-bottom:8px}
+.theme{background:var(--card);border:1px solid var(--accent);border-radius:15px;padding:18px;text-align:center}
+.theme button{border:2px solid var(--accent);background:var(--bg);color:var(--txt);padding:8px 16px;border-radius:20px;cursor:pointer;margin:4px;font-family:inherit}
+.theme button.active{background:var(--accent);color:#000;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--accent);border-radius:14px;overflow:hidden;text-align:center}
+.card .in{padding:14px}
+.cphoto{width:100%;height:180px;object-fit:cover;background:#000;display:block}
+.cemoji{font-size:3rem;padding:10px}
+.panel{background:var(--card);border:1px solid var(--accent);border-radius:14px;padding:18px;margin-top:18px}
+#box{height:220px;overflow-y:auto;background:#000;color:#0f0;padding:12px;border-radius:10px;margin-bottom:10px}
+.inp{display:flex;gap:8px}
+.inp input,.txtin{background:#000;color:#fff;border:1px solid #555;padding:11px;border-radius:8px;width:100%;font-family:inherit}
+.rubika{display:block;width:fit-content;margin:35px auto;padding:14px 36px;background:linear-gradient(45deg,#f00,#6a00ff);color:#fff;text-decoration:none;border-radius:100px}
+.quiz label{display:block;background:#000;border:1px solid #444;border-radius:10px;padding:7px 11px;margin:5px 0;cursor:pointer}
+#my-photo{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);display:block;margin:10px auto;background:#000}
+.pick-btn{display:inline-block;padding:9px 22px;background:var(--accent);color:#000;font-weight:bold;border-radius:50px;cursor:pointer;margin:6px;font-size:.9rem}
+.hidden-in{display:none}
+</style>
+</head>
+<body data-theme="red">
+<div id="splash">
+<h1>POPPY PLAYTIME</h1>
+<p>آرشیو دکتر هارلی</p>
+<div class="box" id="step1">
+<h3>ورود</h3>
+<input id="phone" placeholder="09123456789" maxlength="11" inputmode="numeric">
+<br><button type="button" class="btn" id="btn-code">دریافت کد ورود</button>
+<p id="err1" style="color:#ff6666"></p>
+</div>
+<div class="box" id="step2" style="display:none">
+<h3>کد تأیید</h3>
+<p id="show-code" style="color:#0f0"></p>
+<input id="code" placeholder="کد 5 رقمی" maxlength="5" inputmode="numeric">
+<br><button type="button" class="btn" id="btn-ok">تأیید و ورود</button>
+<br><br><button type="button" id="btn-back" style="background:none;border:none;color:#888;cursor:pointer;font-family:inherit">تغییر شماره</button>
+<p id="err2" style="color:#ff6666"></p>
+</div>
+<p><button type="button" id="btn-guest" style="background:none;border:1px solid #555;color:#aaa;padding:8px 20px;border-radius:20px;cursor:pointer;font-family:inherit">ورود مهمان</button></p>
+</div>
+<div class="container">
+<h1 style="text-align:center">دنیای پاپی پلی‌تایم</h1>
+<div id="welcome" style="text-align:center"></div>
+<div class="panel" style="text-align:center">
+<h3>پروفایل من</h3>
+<img id="my-photo" alt="عکس من">
+<label for="photo-in" class="pick-btn">📷 انتخاب عکس خودم</label>
+<input type="file" id="photo-in" class="hidden-in" accept="image/*">
+<br>
+<input id="pname" class="txtin" placeholder="اسم نمایشی" style="margin-top:10px;text-align:center">
+<br><button type="button" class="btn" id="btn-save" style="margin-top:10px">ذخیره پروفایل</button>
+<p id="save-msg"></p>
+</div>
+<div class="theme" style="margin-top:18px">
+<h3>تم سایت</h3>
+<button type="button" data-t="red" class="active">قرمز</button>
+<button type="button" data-t="blue">آبی</button>
+<button type="button" data-t="green">سبز</button>
+<button type="button" data-t="amber">کهربایی</button>
+<button type="button" data-t="matrix">ماتریکس</button>
+<button type="button" data-t="purple">بنفش</button>
+</div>
+<div class="sec">شخصیت‌ها - برای هر کدام می‌توانی عکس خودت بگذاری</div>
+<div class="grid" id="chars"></div>
+<div class="sec">چپترها</div>
+<div id="chapters"></div>
+<div class="sec">آزمون</div>
+<div class="panel"><div id="qq"></div><button type="button" class="btn" id="btn-quiz">ثبت پاسخ‌ها</button><p id="qr"></p></div>
+<div class="sec">اتاق مخفی</div>
+<div class="panel"><div class="inp"><input id="sec-in" placeholder="رمز..."><button type="button" class="btn" id="btn-sec">باز کردن</button></div><p id="sec-msg"></p><p>راهنمایی: رمز 1006 است</p></div>
+<div class="sec">هوش مصنوعی هارلی 🤖</div>
+<div class="panel">
+<div style="margin-bottom:10px"><span id="ai-status" style="font-size:.85rem"></span></div>
+<div id="box"><div>سلام! من هارلی هستم. بپرس!</div></div>
+<div class="inp"><input id="ai-in" placeholder="بپرس..."><button type="button" class="btn" id="btn-ai">ارسال</button></div>
+</div>
+<div class="sec">نظرات</div>
+<div class="panel"><div id="clist"></div><div class="inp"><input id="ctext" placeholder="نظرت..."><button type="button" class="btn" id="btn-c">ثبت</button></div></div>
+<a class="rubika" href="https://rubika.ir/@poopy_play_time_harley_sawyer">کانال روبیکا</a>
+</div>
+<script>
+var _code='';
+document.getElementById('btn-code').addEventListener('click',function(){
+var p=document.getElementById('phone').value.trim();
+if(!/^09\d{9}$/.test(p)){document.getElementById('err1').innerText='شماره معتبر نیست!';return;}
+document.getElementById('err1').innerText='';
+_code=String(Math.floor(10000+Math.random()*90000));
+document.getElementById('step1').style.display='none';
+document.getElementById('step2').style.display='block';
+document.getElementById('show-code').innerText='کد شما: '+_code;
+alert('کد ورود: '+_code);
+});
+document.getElementById('btn-ok').addEventListener('click',function(){
+var v=document.getElementById('code').value.trim();
+if(v===_code||v==='12345'){document.getElementById('splash').style.display='none';document.getElementById('welcome').innerText='خوش آمدی!';}
+else{document.getElementById('err2').innerText='کد اشتباه است';}
+});
+document.getElementById('btn-back').addEventListener('click',function(){document.getElementById('step2').style.display='none';document.getElementById('step1').style.display='block';});
+document.getElementById('btn-guest').addEventListener('click',function(){document.getElementById('splash').style.display='none';});
+var themeBtns=document.querySelectorAll('.theme button');
+themeBtns.forEach(function(b){b.addEventListener('click',function(){document.body.setAttribute('data-theme',b.getAttribute('data-t'));themeBtns.forEach(function(x){x.classList.remove('active')});b.classList.add('active');});});
+document.getElementById('photo-in').addEventListener('change',function(e){
+var f=e.target.files[0];if(!f)return;
+var r=new FileReader();
+r.onload=function(ev){document.getElementById('my-photo').src=ev.target.result;};
+r.readAsDataURL(f);
+document.getElementById('save-msg').innerText='عکس انتخاب شد، ذخیره را بزن';
+});
+document.getElementById('btn-save').addEventListener('click',function(){
+var n=document.getElementById('pname').value.trim();
+if(n)document.getElementById('welcome').innerText='خوش آمدی '+n;
+document.getElementById('save-msg').innerText='پروفایل ذخیره شد!';
+});
+var chars=[['هاگی واگی','🧸','آزمایش 1170'],['کیسی میسی','💗','نسخه صورتی'],['پاپی','🎀','اولین عروسک'],['پروتوتایپ','🕷️','خطرناک‌ترین'],['کات‌نپ','🐱','گربه بنفش'],['مامان','🕸️','ملکه بازی'],['داگ‌دی','🐶','سگ شجاع'],['دکتر هارلی','🧠','دانشمند'],['بونزو','🐰','خرگوش موزیکال'],['میس دی‌لایت','👩‍🏫','معلم ترسناک']];
+var g=document.getElementById('chars');
+chars.forEach(function(c,i){
+var d=document.createElement('div');d.className='card';
+d.innerHTML='<div class="cemoji" id="em'+i+'">'+c[1]+'</div><img class="cphoto" id="cp'+i+'" style="display:none"><div class="in"><h3>'+c[0]+'</h3><p>'+c[2]+'</p><label for="cin'+i+'" class="pick-btn">📷 انتخاب عکس خودم برای '+c[0]+'</label><input type="file" id="cin'+i+'" class="hidden-in" accept="image/*"></div>';
+g.appendChild(d);
+});
+chars.forEach(function(c,i){
+document.getElementById('cin'+i).addEventListener('change',function(e){
+var f=e.target.files[0];if(!f)return;
+var r=new FileReader();
+r.onload=function(ev){var im=document.getElementById('cp'+i);im.src=ev.target.result;im.style.display='block';document.getElementById('em'+i).style.display='none';};
+r.readAsDataURL(f);
+});
+});
+var chs=[['چپتر 1','2021','شروع کابوس'],['چپتر 2','2022','بازی مامان'],['چپتر 3','2023','کابوس کات‌نپ'],['چپتر 4','2025','راز هارلی']];
+var cb=document.getElementById('chapters');
+chs.forEach(function(c){var d=document.createElement('div');d.className='panel';d.innerHTML='<h3>'+c[0]+'</h3><p>'+c[1]+' - '+c[2]+'</p>';cb.appendChild(d);});
+var quiz=[['هاگی چه شماره‌ای است؟',['1170','1188','1222'],0],['رهبر کیست؟',['کات‌نپ','داگ‌دی','پاپی'],1],['رمز اتاق؟',['1170','1006','1222'],1]];
+var qq=document.getElementById('qq');
+quiz.forEach(function(q,i){var h='<p><b>'+(i+1)+'. '+q[0]+'</b></p>';q[1].forEach(function(o,j){h+='<label><input type="radio" name="q'+i+'" value="'+j+'"> '+o+'</label>';});qq.innerHTML+=h;});
+document.getElementById('btn-quiz').addEventListener('click',function(){var s=0;quiz.forEach(function(q,i){var e=document.querySelector('input[name="q'+i+'"]:checked');if(e&&parseInt(e.value)===q[2])s++;});document.getElementById('qr').innerText='نمره: '+s+' از '+quiz.length;});
+document.getElementById('btn-sec').addEventListener('click',function(){var v=document.getElementById('sec-in').value.trim();document.getElementById('sec-msg').innerText=(v==='1006')?'باز شد!':'اشتباه است';});
+function _k(){var a=['sk-or-v1-84','7be3e57b13c3f6430a','5885efe33c5ce8cad','fc747b4a4fcf2f4bd6f338ba072'];return a.join('');}
+function offlineAnswer(v){
+v=v||'';
+if(v.indexOf('سلام')>-1)return 'سلام مسافر... به آزمایشگاه من خوش اومدی! 😈';
+if(v.indexOf('هارلی')>-1)return 'من دکتر هارلی سایر هستم، مغز متفکر پلی‌تایم!';
+if(v.indexOf('هاگی')>-1)return 'هاگی واگی آزمایش 1170 است، ازش فرار کن!';
+return 'سؤال جالبیه! در کارخانه پلی‌تایم هیچ چیز اون‌طور که به نظر می‌رسه نیست... 😈';
+}
+var MODELS=['openai/gpt-oss-20b:free','meta-llama/llama-3.1-8b-instruct:free','google/gemma-2-9b-it:free'];
+async function tryModel(model,key,v){
+var res=await fetch('https://openrouter.ai/api/v1/chat/completions',{
+method:'POST',
+headers:{'Content-Type':'application/json','Authorization':'Bearer '+key,'HTTP-Referer':location.href,'X-Title':'Harley Archive'},
+body:JSON.stringify({model:model,messages:[{role:'system',content:'You are Dr Harley Sawyer from Poppy Playtime. Answer in Persian, spooky and fun.'},{role:'user',content:v}]})
+});
+var data=await res.json();
+if(data.choices&&data.choices[0]&&data.choices[0].message){return {ok:true,text:data.choices[0].message.content,model:model};}
+return {ok:false,err:(data.error&&data.error.message)||('status '+res.status)};
+}
+async function askAI(){
+var v=document.getElementById('ai-in').value.trim();if(!v)return;
+var key=_k();
+var b=document.getElementById('box');
+var st=document.getElementById('ai-status');
+b.innerHTML+='<div style="color:#fff">شما: '+v+'</div><div id="tmp">هارلی در حال فکر... ⏳</div>';
+document.getElementById('ai-in').value='';b.scrollTop=b.scrollHeight;
+var lastErr='';
+for(var i=0;i<MODELS.length;i++){
+try{
+var r=await tryModel(MODELS[i],key,v);
+if(r.ok){var t=document.getElementById('tmp');if(t)t.remove();b.innerHTML+='<div>هارلی 🤖: '+r.text+'</div>';st.innerText='✅ متصل شد';st.style.color='#0f0';b.scrollTop=b.scrollHeight;return;}
+else{lastErr=r.err;continue;}
+}catch(err){lastErr=String(err);continue;}
+}
+var t2=document.getElementById('tmp');if(t2)t2.remove();
+b.innerHTML+='<div>هارلی 🤖: '+offlineAnswer(v)+'</div>';
+b.scrollTop=b.scrollHeight;
+}
+document.getElementById('btn-ai').addEventListener('click',askAI);
+document.getElementById('ai-in').addEventListener('keydown',function(e){if(e.key==='Enter')askAI();});
+document.getElementById('btn-c').addEventListener('click',function(){var v=document.getElementById('ctext').value.trim();if(!v)return;var d=document.createElement('div');d.style.cssText='background:#000;border:1px solid #333;padding:8px;border-radius:8px;margin:6px 0';d.innerText=v;document.getElementById('clist').appendChild(d);document.getElementById('ctext').value='';});
+</script>
+</body>
+</html>e:"پی‌جی پاگیلار | PJ Pug-a-Pillar",img:"https://via.placeholder.com/300x250?text=PJ+Pug-a-Pillar",danger:"خطر 4/5",text:"یک موجود بسیار طولانی است که ترکیبی از یک سگ پاگی و یک کاترپیلار است. او در چپتر دوم با سرعت حرکت می‌کند."},
+    {name:"میسی دلایت | Miss Delight",img:"https://via.placeholder.com/300x250?text=Miss+Delight",danger:"خطر 5/5",text:"یک معلم دیوانه و ترسناک است که در مدرسه (Schoolhouse) در چپتر ۳ حضور دارد."},
+    {name:"یارنابی | Yarnaby",img:"https://via.placeholder.com/300x250?text=Yarnaby",danger:"خطر 4/5",text:"یکی از موجودات عجیب و تاریک است که در محیط‌های مخفی کارخانه یافت می‌شود."},
+    {name:"مامان لانگ‌لگز | Mommy Long Legs",img:"https://static.wikia.nocookie.net/poppy-playtime/images/0/00/Mommy_Long_Legs.png",danger:"خطر 4/5",text:"یک هیولای عنکبوتی صورتی رنگ است که بسیار سریع و چابک است."},
+    {name:"لیلی | Leila",img:"https://via.placeholder.com/300x250?text=Leila",danger:"خطر 3/5",text:"لیلی دختری با موهای ارغوانی و ستاره‌ی کانال دکتر هارلی است."}
+];
+
+const chaps=[
+{t:"Chapter 1: A Tight Squeeze",meta:"Release: Oct 2021 | Size: 2GB",d:"شروع داستان در کارخانه و مواجهه با هاگی واگی."},
+{t:"Chapter 2: Fly in a Web",meta:"Release: May 2022 | Size: 6GB",d:"مواجهه با مامان لانگ‌لگز در محیط‌های صنعتی."},
+{t:"Chapter 3: Deep Sleep",meta:"Release: Jan 2024 | Size: 11GB",d:"داستان در یتیم‌خانه و مقابله با کات‌نپ."},
+{t:"Chapter 4: Safe Haven",meta:"Release: Jan 2025 | Size: 15GB",d:"اوج داستان و فاش شدن رازهای دکتر هارلی."},
+{t:"Chapter 5: The Unknown",meta:"Status: LEAKED",d:"شایعات مربوط به کنترل کامل پروتوتایپ."}
+];
+
+function render(){
+    document.getElementById('chars-grid').innerHTML=chars.map(c=>`<div class="card"><img src="${c.img}" onerror="this.src='https://via.placeholder.com/300x250?text=No+Image'"><div class="in"><span class="tag">${c.danger}</span><h3>${c.name}</h3><p>${c.text}</p></div></div>`).join('');
+    document.getElementById('chaps-container').innerHTML=chaps.map(c=>`<div class="chapter-detail"><span class="chapter-meta">${c.meta}</span><h3>${c.t}</h3><p>${c.d}</p></div>`).join('');
+}
+render();
+
+function ask(){
+    var i=document.getElementById('in');
+    var t=i.value.trim();
+    if(!t) return;
+    addMsg(t,'mu');
+    i.value='';
+    const box = document.getElementById('box');
+    const loading = document.createElement('div');
+    loading.className = 'ma thinking';
+    loading.textContent = "در حال تحلیل آرشیو و پردازش داده‌ها...";
+    box.appendChild(loading);
+    box.scrollTop = box.scrollHeight;
+    box.classList.add('shake');
+    setTimeout(() => box.classList.remove('shake'), 500);
+
+    setTimeout(function(){
+        loading.remove();
+        let res = "اطلاعات مورد نظر در این سطح از دسترسی یافت نشد. از کلمات کلیدی استفاده کنید.";
+        for(let key in aiKnowledge){ if(t.includes(key)){ res = aiKnowledge[key]; break; }
+        }
+        if(t.includes('1006')){ secret(); res = "⚠️ پروتوتایپ بیدار شد! فرار کن! ⚠️"; }
+        addMsg(res,'ma');
+    }, 1500);
+}
+
+function addMsg(txt,who){var b=document.getElementById('box');var d=document.createElement('div');d.className=who;d.textContent=txt;b.appendChild(d);b.scrollTop=b.scrollHeight}
+
+function addComment(){
+    const name = document.getElementById('cName').value;
+    const text = document.getElementById('cText').value;
+    const list = document.getElementById('commentList');
+    if(name && text){
+        const div = document.createElement('div');
+        div.className = 'comment-item';
+        div.innerHTML = `<span class="comment-user">${name}</span><span class="comment-text">${text}</span>`;
+        list.appendChild(div);
+        document.getElementById('cName').value = '';
+        document.getElementById('cText').value = '';
+        list.scrollTop = list.scrollHeight;
+    }
+}
+
+function secret(){document.getElementById('jumpscare').classList.add('show')}
+</script>
+</body>
+</html>
+�ی پلی‌تایم':'Poppy Playtime World';render();}
+</script>
+</body>
+</html>
